@@ -6,8 +6,8 @@ String replyModelToJson(ReplyModel data) => json.encode(data.toJson());
 
 class ReplyModel {
   String answer;
-  bool chain;
-  int questionId;
+  String chain;
+  String questionId;
 
   ReplyModel({
     this.answer,

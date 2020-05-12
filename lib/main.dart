@@ -24,7 +24,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String url = 'http://salty-shelf-45512.herokuapp.com/language';
+  String url = 'http://calm-crag-08514.herokuapp.com/language';
 
   // ignore: missing_return
   Future<String> makeRequest() async {

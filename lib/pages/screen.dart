@@ -10,19 +10,19 @@ class Screen extends StatefulWidget {
   _ScreenState createState() => _ScreenState();
 }
 
-bool abc = false;
+String abc = "false";
 String prev_qst = "-1";
 
 String qst;
 
 Future<ReplyModel> makeUser(String txt) async {
-  final String url = 'http://salty-shelf-45512.herokuapp.com/';
+  final String url = 'http://calm-crag-08514.herokuapp.com/';
 
   final response = await http.post(url, body: {
     "language": getId,
     "category": catId,
     "question": txt,
-    "chain": "$abc",
+    "chain": abc,
     "previous_question": prev_qst,
   });
 
@@ -209,7 +209,7 @@ class _ScreenState extends State<Screen> {
           itemCount: _messages?.length,
         )),
         // Divider(height: 1.0),
-        (abc == true)
+        (abc == "true")
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[

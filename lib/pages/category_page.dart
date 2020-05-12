@@ -14,7 +14,7 @@ List catData;
 String catName;
 String catId;
 class _CategoryListState extends State<CategoryList> {
-  String url = 'http://salty-shelf-45512.herokuapp.com/category';
+  String url = 'http://calm-crag-08514.herokuapp.com/category';
 
   // ignore: missing_return
   Future<String> makeRequest() async {
