@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
-    theme: ThemeData(
-      accentColor: Colors.lightGreen
-    ),
+    theme: ThemeData(accentColor: Colors.lightGreen),
     debugShowCheckedModeBanner: false,
     home: MyApp(),
   ));
@@ -84,7 +82,10 @@ class _MyAppState extends State<MyApp> {
                       print(langName);
                       print(getId);
                     });
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryList()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CategoryList()));
                   },
                 ),
                 Divider(
