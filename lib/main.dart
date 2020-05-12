@@ -46,20 +46,13 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       backgroundColor: Colors.lightGreen[100],
       appBar: AppBar(
+        backgroundColor: Color(0xff1fbfb8),
         title: Text(
           'SeWaki',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.lightGreen,
       ),
-//      floatingActionButton: FloatingActionButton(
-//        child: Icon(Icons.navigate_next),
-//        backgroundColor: Colors.lightGreen,
-//        onPressed: (){
-//
-//        },
-//      ),
       body: Container(
         child: ListView.builder(
           itemCount: data == null ? 0 : data.length,
@@ -79,8 +72,6 @@ class _MyAppState extends State<MyApp> {
                     setState(() {
                       getId = data[index]['lang_code'];
                       langName = data[index]['lang_name'];
-                      print(langName);
-                      print(getId);
                     });
                     Navigator.push(
                         context,

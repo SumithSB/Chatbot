@@ -43,23 +43,32 @@ class _ScreenState extends State<Screen> {
     return IconTheme(
       data: IconThemeData(color: Theme.of(context).accentColor),
       child: Container(
-        color: Colors.orangeAccent,
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        // margin: EdgeInsets.symmetric(horizontal: 5.0),
         child: Row(
           children: <Widget>[
             new Flexible(
-              child: new TextField(
+              child: TextField(
+                cursorColor: Colors.black,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                style: TextStyle(color: Colors.black, fontSize: 15.0),
                 controller: txtCtr,
                 onSubmitted: _handleSubmitted,
-                decoration:
-                    new InputDecoration.collapsed(hintText: "Send a message"),
+                decoration: InputDecoration(
+                  filled: true,
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                  //fillColor:,
+                  hintText: 'Type your message...',
+                  hintStyle: TextStyle(color: Colors.black),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                      borderSide: BorderSide(color: Colors.black, width: 1.5)),
+                  focusColor: Colors.black87,
+                ),
               ),
             ),
             Container(
-              decoration: BoxDecoration(
-                  color: Colors.green[300],
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(30.0))),
               margin: EdgeInsets.symmetric(horizontal: 4.0),
               child: IconButton(
                   icon: Icon(
@@ -89,6 +98,7 @@ class _ScreenState extends State<Screen> {
               child: TextField(
                 cursorColor: Colors.black,
                 keyboardType: TextInputType.multiline,
+                maxLines: null,
                 style: TextStyle(color: Colors.black, fontSize: 15.0),
                 controller: txtCtr,
                 onSubmitted: _handleSubmitted,
@@ -96,49 +106,33 @@ class _ScreenState extends State<Screen> {
                     filled: true,
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                    fillColor: Colors.lightGreen[300],
+                    //fillColor:,
                     hintText: 'Type your message...',
                     hintStyle: TextStyle(color: Colors.black),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         borderSide:
                             BorderSide(color: Colors.black, width: 1.5)),
-                    focusColor: Colors.black87),
+                    focusColor: Colors.black87,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        Icons.send,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        if (txtCtr.text.isNotEmpty) {
+                          setState(() {
+                            qst = txtCtr.text;
+                          });
+                          _handleSubmitted(qst);
+                        }
+                      },
+                    )),
               ),
             ),
-          ),
-          SizedBox(
-            width: 5.0,
-          ),
-          // Button send message
-          Material(
-            child: Container(
-              //padding: EdgeInsets.all(1.0),
-              decoration: BoxDecoration(
-                  color: Colors.lightGreen[300],
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              child: IconButton(
-                icon: Icon(Icons.send),
-                focusColor: Colors.redAccent,
-                splashColor: Colors.red,
-                onPressed: () {
-                  if (txtCtr.text.isNotEmpty) {
-                    setState(() {
-                      qst = txtCtr.text;
-                    });
-                    _handleSubmitted(qst);
-                  }
-                },
-                color: Colors.black,
-              ),
-            ),
-            color: Colors.transparent,
           ),
         ],
       ),
-      width: double.infinity,
-      height: 50.0,
     );
   }
 
@@ -198,7 +192,7 @@ class _ScreenState extends State<Screen> {
                     TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
         centerTitle: true,
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Color(0xff1fbfb8),
       ),
       body: Column(children: <Widget>[
         Flexible(
@@ -209,38 +203,40 @@ class _ScreenState extends State<Screen> {
           itemCount: _messages?.length,
         )),
         // Divider(height: 1.0),
-        (abc == "true")
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton(
-                    child: Icon(Icons.check_circle),
-                    onPressed: () {
-                      setState(() {
-                        abc = _reply.chain;
-                        prev_qst = _reply.questionId.toString();
-                        print(prev_qst);
-                        qst = "yes";
-                      });
-                      _handleSubmitted(qst);
-                    },
-                  ),
-                  RaisedButton(
-                    child: Icon(Icons.cancel),
-                    onPressed: () {
-                      setState(() {
-                        abc = _reply.chain;
-                        qst = "no";
-                      });
-                      _handleSubmitted(qst);
-                    },
-                  ),
-                ],
-              )
-            : Container(),
+
         Container(
           color: Colors.transparent,
-          child: msg(),
+          child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: (abc == "true")
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        RaisedButton(
+                          child: Icon(Icons.check_circle),
+                          onPressed: () {
+                            setState(() {
+                              abc = _reply.chain;
+                              prev_qst = _reply.questionId;
+                              print(prev_qst);
+                              qst = "yes";
+                            });
+                            _handleSubmitted(qst);
+                          },
+                        ),
+                        RaisedButton(
+                          child: Icon(Icons.cancel),
+                          onPressed: () {
+                            setState(() {
+                              abc = _reply.chain;
+                              qst = "no";
+                            });
+                            _handleSubmitted(qst);
+                          },
+                        ),
+                      ],
+                    )
+                  : msg()),
         ),
       ]),
     );
@@ -259,9 +255,7 @@ class ChatMessage extends StatelessWidget {
       new Container(
         margin: const EdgeInsets.only(right: 16.0),
         child: new CircleAvatar(
-            backgroundColor: Colors.blueGrey,
-            child: new Text('S')
-        ),
+            backgroundColor: Colors.blueGrey, child: new Text('S')),
       ),
       new Expanded(
         child: new Column(
@@ -304,12 +298,12 @@ class ChatMessage extends StatelessWidget {
       ),
       Container(
         margin: EdgeInsets.only(left: 16.0),
-        child:  CircleAvatar(
-          backgroundColor: Colors.blueGrey,
-            child:  Text(
-          this.name[0],
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )),
+        child: CircleAvatar(
+            backgroundColor: Colors.blueGrey,
+            child: Text(
+              this.name[0],
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )),
       ),
     ];
   }

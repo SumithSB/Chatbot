@@ -3,16 +3,15 @@ import 'package:sewaki/pages/screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
-
-
-
 class CategoryList extends StatefulWidget {
   @override
   _CategoryListState createState() => _CategoryListState();
 }
+
 List catData;
 String catName;
 String catId;
+
 class _CategoryListState extends State<CategoryList> {
   String url = 'http://calm-crag-08514.herokuapp.com/category';
 
@@ -32,18 +31,25 @@ class _CategoryListState extends State<CategoryList> {
     super.initState();
     this.makeRequest();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightGreen[100],
       appBar: AppBar(
-        leading: Icon(Icons.list),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(
           'Category List',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Color(0xff1fbfb8),
       ),
       body: Container(
         child: ListView.builder(
@@ -64,17 +70,9 @@ class _CategoryListState extends State<CategoryList> {
                     setState(() {
                       catId = catData[index]['category_id'].toString();
                       catName = catData[index]['category_name'];
-                      print(catName);
-                      print(catId);
                     });
-//                    String str = "Hello World!";
-//                    String key = "1234567890";
-//                    String encrypt_data = xxtea.encryptToString(str, key);
-//                    print(encrypt_data);
-//                    String msg = 'DcEFHFzObMFNSSNcWSMOdssljnEXxiBfXyOouCJUcGG0xAJhlifrDj9+IdoQ0TUV2rFt7NZAbVo5h7ADQMHhWq7wxsynO3jfuI2kD+zcP0I=';
-//                    String decrypt_data = xxtea.decryptToString(msg, key);
-//                    print(decrypt_data);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Screen()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Screen()));
                   },
                 ),
                 Divider(
