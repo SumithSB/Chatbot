@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
-    theme: ThemeData(accentColor: Colors.lightGreen),
+    theme: ThemeData(accentColor: Color(0xff1fbfb8)),
     debugShowCheckedModeBanner: false,
     home: MyApp(),
   ));
@@ -44,11 +44,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightGreen[100],
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Color(0xff1fbfb8),
         title: Text(
-          'SeWaki',
+          'ChatBot',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -59,14 +59,32 @@ class _MyAppState extends State<MyApp> {
           itemBuilder: (context, index) {
             return Column(
               children: <Widget>[
+                (index == 0)
+                    ? Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CircleAvatar(
+                            radius: 80,
+                            backgroundColor: Colors.lightBlue,
+                            backgroundImage: AssetImage("images/chatbot.png"),
+                          ),
+                          Container(
+                              height: 50,
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Select a language",
+                                style: TextStyle(fontSize: 25),
+                              )),
+                        ],
+                      )
+                    : Container(),
                 Divider(
                   height: 0.0,
                 ),
                 ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage('images/covid19.png'),
-                  ),
+                  trailing: Icon(Icons.navigate_next),
                   title: Text(data[index]['lang_name']),
                   onTap: () {
                     setState(() {

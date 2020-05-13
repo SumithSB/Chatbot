@@ -35,7 +35,7 @@ class _CategoryListState extends State<CategoryList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightGreen[100],
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
@@ -57,15 +57,25 @@ class _CategoryListState extends State<CategoryList> {
           itemBuilder: (context, index) {
             return Column(
               children: <Widget>[
+                (index == 0)
+                    ? Column(
+                  children: <Widget>[
+                    SizedBox(height: 10,),
+                    CircleAvatar(
+                      radius: 80,
+                      backgroundColor: Colors.lightBlue,
+                      backgroundImage: AssetImage("images/chatbot.png"),
+                    ),
+                    SizedBox(height: 10,)
+                  ],
+                )
+                    : Container(),
                 Divider(
                   height: 0.0,
                 ),
                 ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage('images/covid19.png'),
-                  ),
                   title: Text(catData[index]['category_name']),
+                  trailing: Icon(Icons.navigate_next),
                   onTap: () {
                     setState(() {
                       catId = catData[index]['category_id'].toString();

@@ -140,7 +140,7 @@ class _ScreenState extends State<Screen> {
     txtCtr.clear();
     ChatMessage message = new ChatMessage(
       text: _reply?.answer,
-      name: "SeWaki",
+      name: "ChatBot",
       type: false,
     );
     setState(() {
@@ -171,7 +171,7 @@ class _ScreenState extends State<Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightGreen[100],
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
@@ -253,9 +253,9 @@ class ChatMessage extends StatelessWidget {
   List<Widget> otherMessage(context) {
     return <Widget>[
       new Container(
-        margin: const EdgeInsets.only(right: 16.0),
-        child: new CircleAvatar(
-            backgroundColor: Colors.blueGrey, child: new Text('S')),
+        margin:  EdgeInsets.only(right: 6.0),
+        child:  CircleAvatar(
+            backgroundColor: Color(0xff1fbfb8), child: new Text('S',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),)),
       ),
       new Expanded(
         child: new Column(
@@ -268,7 +268,7 @@ class ChatMessage extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: Colors.black)),
+                  border: Border.all(color: Colors.black,width: 0.5)),
               child: Text(text),
             ),
           ],
@@ -288,7 +288,7 @@ class ChatMessage extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: Colors.black)),
+                  border: Border.all(color: Colors.black,width: 0.5)),
               margin: EdgeInsets.only(top: 5.0),
               padding: EdgeInsets.all(10),
               child: Text(text),
@@ -297,12 +297,12 @@ class ChatMessage extends StatelessWidget {
         ),
       ),
       Container(
-        margin: EdgeInsets.only(left: 16.0),
+        margin: EdgeInsets.only(left: 6.0),
         child: CircleAvatar(
             backgroundColor: Colors.blueGrey,
             child: Text(
               this.name[0],
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
             )),
       ),
     ];
