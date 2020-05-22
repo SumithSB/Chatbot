@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:sewaki/loading.dart';
 import 'package:sewaki/pages/category_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -23,6 +25,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String url = 'http://calm-crag-08514.herokuapp.com/language';
+  bool isLoading = true;
 
   // ignore: missing_return
   Future<String> makeRequest() async {
@@ -32,6 +35,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       var extractData = json.decode(response.body);
       data = extractData['language'];
+      isLoading = false;
     });
   }
 
@@ -43,7 +47,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return isLoading ? Loading() : Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Color(0xff1fbfb8),
@@ -85,6 +89,11 @@ class _MyAppState extends State<MyApp> {
                 ),
                 ListTile(
                   trailing: Icon(Icons.navigate_next),
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    backgroundImage: CachedNetworkImageProvider(
+                        '${data[index]['lang_url']}'),
+                  ),
                   title: Text(data[index]['lang_name']),
                   onTap: () {
                     setState(() {

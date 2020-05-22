@@ -1,3 +1,4 @@
+import 'package:sewaki/loading.dart';
 import 'package:sewaki/main.dart';
 import 'package:sewaki/pages/category_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,9 +34,10 @@ Future<ReplyModel> makeUser(String txt) async {
     return null;
   }
 }
-
+bool isReplying = true;
 class _ScreenState extends State<Screen> {
   final List<ChatMessage> _messages = <ChatMessage>[];
+
   ReplyModel _reply;
   TextEditingController txtCtr = TextEditingController();
 
@@ -123,8 +125,8 @@ class _ScreenState extends State<Screen> {
                         if (txtCtr.text.isNotEmpty) {
                           setState(() {
                             qst = txtCtr.text;
+                            _handleSubmitted(qst);
                           });
-                          _handleSubmitted(qst);
                         }
                       },
                     )),
@@ -145,25 +147,27 @@ class _ScreenState extends State<Screen> {
     );
     setState(() {
       _messages.insert(0, message);
+//      abc = _reply.chain;
+      prev_qst = _reply.questionId.toString();
       abc = _reply.chain;
+      isReplying = false;
     });
   }
 
   void _handleSubmitted(String text) async {
-    final ReplyModel reply = await makeUser(text);
-    setState(() {
-      _reply = reply;
-    });
     txtCtr.clear();
     ChatMessage message = ChatMessage(
       text: text,
       name: "Me",
       type: true,
     );
+
     setState(() {
       _messages.insert(0, message);
-      prev_qst = _reply.questionId.toString();
-      abc = _reply.chain;
+    });
+    final ReplyModel reply = await makeUser(text);
+    setState(() {
+      _reply = reply;
     });
     Response(text);
   }
@@ -253,11 +257,16 @@ class ChatMessage extends StatelessWidget {
   List<Widget> otherMessage(context) {
     return <Widget>[
       new Container(
-        margin:  EdgeInsets.only(right: 6.0),
-        child:  CircleAvatar(
-            backgroundColor: Color(0xff1fbfb8), child: new Text('S',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),)),
+        margin: EdgeInsets.only(right: 6.0),
+        child: CircleAvatar(
+            backgroundColor: Color(0xff1fbfb8),
+            child: new Text(
+              'S',
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            )),
       ),
-      new Expanded(
+      isReplying ? Loading() : Expanded(
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -268,7 +277,7 @@ class ChatMessage extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: Colors.black,width: 0.5)),
+                  border: Border.all(color: Colors.black, width: 0.5)),
               child: Text(text),
             ),
           ],
@@ -288,7 +297,7 @@ class ChatMessage extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: Colors.black,width: 0.5)),
+                  border: Border.all(color: Colors.black, width: 0.5)),
               margin: EdgeInsets.only(top: 5.0),
               padding: EdgeInsets.all(10),
               child: Text(text),
@@ -302,7 +311,8 @@ class ChatMessage extends StatelessWidget {
             backgroundColor: Colors.blueGrey,
             child: Text(
               this.name[0],
-              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
             )),
       ),
     ];
