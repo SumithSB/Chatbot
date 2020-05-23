@@ -40,27 +40,26 @@ class _CategoryListState extends State<CategoryList> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? Loading()
-        : Scaffold(
-            backgroundColor: Colors.grey[100],
-            appBar: AppBar(
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black,
-                ),
-                onPressed: () => Navigator.pop(context),
-              ),
-              title: Text(
-                'Category List',
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              centerTitle: true,
-              backgroundColor: Color(0xff1fbfb8),
-            ),
-            body: Container(
+    return Scaffold(
+      backgroundColor: Colors.grey[100],
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(
+          'Category List',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0xff1fbfb8),
+      ),
+      body: isLoading
+          ? Loading()
+          : Container(
               child: ListView.builder(
                 itemCount: catData == null ? 0 : catData.length,
                 itemBuilder: (context, index) {
@@ -114,6 +113,6 @@ class _CategoryListState extends State<CategoryList> {
                 },
               ),
             ),
-          );
+    );
   }
 }

@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading ? Loading() : Scaffold(
+    return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Color(0xff1fbfb8),
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         ),
         centerTitle: true,
       ),
-      body: Container(
+      body: isLoading ? Loading() : Container(
         child: ListView.builder(
           itemCount: data == null ? 0 : data.length,
           itemBuilder: (context, index) {

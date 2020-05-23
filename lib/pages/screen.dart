@@ -1,4 +1,3 @@
-import 'package:sewaki/loading.dart';
 import 'package:sewaki/main.dart';
 import 'package:sewaki/pages/category_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,61 +33,12 @@ Future<ReplyModel> makeUser(String txt) async {
     return null;
   }
 }
-bool isReplying = true;
+
 class _ScreenState extends State<Screen> {
   final List<ChatMessage> _messages = <ChatMessage>[];
 
   ReplyModel _reply;
   TextEditingController txtCtr = TextEditingController();
-
-  Widget _buildTextComposer() {
-    return IconTheme(
-      data: IconThemeData(color: Theme.of(context).accentColor),
-      child: Container(
-        // margin: EdgeInsets.symmetric(horizontal: 5.0),
-        child: Row(
-          children: <Widget>[
-            new Flexible(
-              child: TextField(
-                cursorColor: Colors.black,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                style: TextStyle(color: Colors.black, fontSize: 15.0),
-                controller: txtCtr,
-                onSubmitted: _handleSubmitted,
-                decoration: InputDecoration(
-                  filled: true,
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  //fillColor:,
-                  hintText: 'Type your message...',
-                  hintStyle: TextStyle(color: Colors.black),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                      borderSide: BorderSide(color: Colors.black, width: 1.5)),
-                  focusColor: Colors.black87,
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 4.0),
-              child: IconButton(
-                  icon: Icon(
-                    Icons.send,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      qst = txtCtr.text;
-                    });
-                    _handleSubmitted(qst);
-                  }),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget msg() {
     return Container(
@@ -150,7 +100,6 @@ class _ScreenState extends State<Screen> {
 //      abc = _reply.chain;
       prev_qst = _reply.questionId.toString();
       abc = _reply.chain;
-      isReplying = false;
     });
   }
 
@@ -203,7 +152,9 @@ class _ScreenState extends State<Screen> {
             child: ListView.builder(
           padding: EdgeInsets.all(8.0),
           reverse: true,
-          itemBuilder: (_, int index) => _messages[index],
+          itemBuilder: (_, int index) {
+            return _messages[index];
+          },
           itemCount: _messages?.length,
         )),
         // Divider(height: 1.0),
@@ -266,7 +217,7 @@ class ChatMessage extends StatelessWidget {
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             )),
       ),
-      isReplying ? Loading() : Expanded(
+      Expanded(
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -320,9 +271,9 @@ class ChatMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      child: new Row(
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10.0),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: this.type ? myMessage(context) : otherMessage(context),
       ),
