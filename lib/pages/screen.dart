@@ -16,7 +16,7 @@ String prev_qst = "-1";
 String qst;
 
 Future<ReplyModel> makeUser(String txt) async {
-  final String url = 'Enter the api url';
+  final String url = 'http://calm-crag-08514.herokuapp.com/';
 
   final response = await http.post(url, body: {
     "language": getId,
