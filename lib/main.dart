@@ -24,7 +24,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String url = 'http://calm-crag-08514.herokuapp.com/language';
+  String url = 'Enter the api url for get request';
   bool isLoading = true;
 
   // ignore: missing_return

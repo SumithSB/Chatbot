@@ -17,7 +17,7 @@ String catName;
 String catId;
 
 class _CategoryListState extends State<CategoryList> {
-  String url = 'http://calm-crag-08514.herokuapp.com/category?lang=$getId';
+  String url = 'Enter the api url for get request';
   bool isLoading = true;
 
   // ignore: missing_return
